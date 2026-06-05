@@ -1,0 +1,830 @@
+<?php
+// Álvarez Legal LLC — Landing Page
+// Firm Forward — June 2026
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Álvarez Legal LLC | Intellectual Property & Commercial Litigation | San Juan, Puerto Rico</title>
+<meta name="description" content="Álvarez Legal LLC is a specialist law firm in San Juan, Puerto Rico, led by attorney Yolanda Álvarez. Intellectual property, entertainment law, civil and commercial litigation, animal law, and notary services.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ─── TOKENS ─── */
+  :root {
+    --maroon:     #6B1A1A;
+    --maroon-deep:#4A0F0F;
+    --maroon-mid: #8B2222;
+    --maroon-lt:  #F5EDED;
+    --gold:       #C9A84C;
+    --gold-lt:    #E8D5A3;
+    --white:      #FFFFFF;
+    --off-white:  #FAF8F5;
+    --ink:        #1A1A1A;
+    --ink-mid:    #3D3332;
+    --ink-lt:     #6B6360;
+    --rule:       rgba(107,26,26,0.15);
+
+    --font-display: 'Cormorant Garamond', Georgia, serif;
+    --font-body:    'Jost', sans-serif;
+
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    --max: 1200px;
+    --pad: clamp(1.5rem, 5vw, 4rem);
+  }
+
+  /* ─── RESET ─── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  img  { display: block; max-width: 100%; }
+  a    { color: inherit; text-decoration: none; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--off-white);
+    color: var(--ink);
+    font-size: clamp(0.9rem, 1.1vw, 1rem);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ─── UTILITY ─── */
+  .container { max-width: var(--max); margin-inline: auto; padding-inline: var(--pad); }
+  .sr-only { position: absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); }
+  .gold-rule {
+    display: block; width: 3rem; height: 1px;
+    background: var(--gold); margin-block: 1.25rem;
+  }
+
+  /* ─── NAV ─── */
+  .nav {
+    position: fixed; inset: 0 0 auto;
+    z-index: 100;
+    background: var(--maroon-deep);
+    border-bottom: 1px solid rgba(201,168,76,0.25);
+    transition: box-shadow 0.3s var(--ease);
+  }
+  .nav.scrolled { box-shadow: 0 4px 30px rgba(0,0,0,0.4); }
+  .nav__inner {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 72px; max-width: var(--max); margin-inline: auto;
+    padding-inline: var(--pad);
+  }
+  .nav__logo { height: 38px; }
+  .nav__links {
+    display: flex; align-items: center; gap: 2rem;
+    list-style: none;
+  }
+  .nav__links a {
+    font-family: var(--font-body); font-size: 0.75rem;
+    font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(255,255,255,0.8);
+    transition: color 0.2s;
+  }
+  .nav__links a:hover { color: var(--gold); }
+  .nav__cta {
+    font-family: var(--font-body); font-size: 0.72rem;
+    font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 0.55rem 1.4rem;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    transition: background 0.25s, color 0.25s;
+  }
+  .nav__cta:hover { background: var(--gold); color: var(--maroon-deep); }
+  .nav__toggle { display: none; }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative; min-height: 100vh;
+    display: grid; place-items: center;
+    background: var(--maroon-deep);
+    overflow: hidden;
+    padding-top: 72px;
+  }
+  .hero__bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 70% 40%, rgba(139,34,34,0.5) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 80% at 20% 80%, rgba(74,15,15,0.8) 0%, transparent 60%);
+  }
+  .hero__texture {
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.018'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .hero__content {
+    position: relative; z-index: 2;
+    text-align: center;
+    max-width: 860px;
+    padding: 4rem var(--pad);
+    animation: fadeUp 1.1s var(--ease) both;
+  }
+  .hero__eyebrow {
+    font-family: var(--font-body); font-size: 0.7rem;
+    font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1.5rem;
+  }
+  .hero__title {
+    font-family: var(--font-display); font-weight: 300;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    line-height: 1.08; letter-spacing: -0.01em;
+    color: var(--white);
+    margin-bottom: 1.5rem;
+  }
+  .hero__title em {
+    font-style: italic; color: var(--gold-lt);
+    font-weight: 300;
+  }
+  .hero__subtitle {
+    font-family: var(--font-body); font-weight: 300;
+    font-size: clamp(0.95rem, 1.5vw, 1.15rem);
+    color: rgba(255,255,255,0.65);
+    max-width: 560px; margin-inline: auto;
+    line-height: 1.75;
+    margin-bottom: 2.75rem;
+  }
+  .hero__actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    font-family: var(--font-body); font-size: 0.75rem;
+    font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase;
+    padding: 1rem 2.25rem;
+    background: var(--gold); color: var(--maroon-deep);
+    transition: background 0.25s, transform 0.2s;
+  }
+  .btn-primary:hover { background: #B8963E; transform: translateY(-1px); }
+  .btn-ghost {
+    font-family: var(--font-body); font-size: 0.75rem;
+    font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 1rem 2.25rem;
+    border: 1px solid rgba(255,255,255,0.3); color: rgba(255,255,255,0.8);
+    transition: border-color 0.25s, color 0.25s;
+  }
+  .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+  .hero__chambers {
+    position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+    z-index: 2; white-space: nowrap;
+    font-family: var(--font-body); font-size: 0.68rem;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: rgba(201,168,76,0.7);
+    animation: fadeUp 1.4s var(--ease) 0.3s both;
+  }
+  .hero__scroll {
+    position: absolute; bottom: 2rem; right: var(--pad); z-index: 2;
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    animation: fadeUp 1.6s var(--ease) 0.5s both;
+  }
+  .hero__scroll::after {
+    content: ''; width: 1px; height: 40px;
+    background: linear-gradient(to bottom, rgba(201,168,76,0.5), transparent);
+    animation: scrollLine 2s ease-in-out infinite;
+  }
+
+  /* ─── CHAMBERS BANNER ─── */
+  .chambers-banner {
+    background: var(--maroon);
+    padding: 1.1rem var(--pad);
+    text-align: center;
+  }
+  .chambers-banner p {
+    font-family: var(--font-body); font-size: 0.72rem;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--gold-lt);
+  }
+  .chambers-banner strong { color: var(--gold); }
+
+  /* ─── SECTION BASE ─── */
+  section { padding-block: clamp(4rem, 8vw, 7rem); }
+
+  .section-label {
+    font-family: var(--font-body); font-size: 0.65rem;
+    font-weight: 600; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--maroon); margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: var(--font-display); font-weight: 400;
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.15; color: var(--ink);
+  }
+  .section-title em { font-style: italic; color: var(--maroon); }
+  .section-body {
+    font-weight: 300; color: var(--ink-mid);
+    font-size: clamp(0.95rem, 1.2vw, 1.05rem);
+    line-height: 1.85; max-width: 54ch;
+  }
+
+  /* ─── INTRO SPLIT ─── */
+  .intro { background: var(--white); }
+  .intro__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(3rem, 6vw, 6rem);
+    align-items: center;
+  }
+  .intro__left {}
+  .intro__right {
+    border-left: 1px solid var(--rule);
+    padding-left: clamp(2rem, 4vw, 4rem);
+  }
+  .intro__stat {
+    display: flex; flex-direction: column;
+    margin-bottom: 2.5rem;
+  }
+  .intro__stat-num {
+    font-family: var(--font-display); font-weight: 300;
+    font-size: 3.5rem; line-height: 1;
+    color: var(--maroon);
+  }
+  .intro__stat-label {
+    font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--ink-lt); margin-top: 0.4rem; font-weight: 500;
+  }
+  .intro__stats { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem 1rem; }
+
+  /* ─── PRACTICE AREAS ─── */
+  .practice { background: var(--off-white); }
+  .practice__header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+    gap: 2rem;
+  }
+  .practice__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5px;
+    background: var(--rule);
+    border: 1.5px solid var(--rule);
+  }
+  .practice__card {
+    background: var(--white); padding: 2.5rem 2rem;
+    position: relative; overflow: hidden;
+    transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+    cursor: default;
+  }
+  .practice__card::before {
+    content: ''; position: absolute;
+    inset: 0 0 auto; height: 3px;
+    background: var(--gold);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.35s var(--ease);
+  }
+  .practice__card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(107,26,26,0.1); }
+  .practice__card:hover::before { transform: scaleX(1); }
+  .practice__icon {
+    font-size: 1.6rem; margin-bottom: 1.25rem;
+    display: block;
+  }
+  .practice__name {
+    font-family: var(--font-display); font-weight: 500;
+    font-size: 1.3rem; color: var(--ink);
+    margin-bottom: 0.75rem;
+  }
+  .practice__desc {
+    font-size: 0.88rem; color: var(--ink-lt); line-height: 1.7;
+    font-weight: 300;
+  }
+  .practice__link {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    margin-top: 1.5rem;
+    font-size: 0.7rem; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--maroon);
+    transition: gap 0.2s;
+  }
+  .practice__link:hover { gap: 0.7rem; }
+  .practice__link::after { content: '→'; }
+
+  /* ─── YOLANDA ─── */
+  .yolanda { background: var(--maroon-deep); color: var(--white); }
+  .yolanda__grid {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: clamp(3rem, 6vw, 6rem);
+    align-items: start;
+  }
+  .yolanda__left {}
+  .yolanda__photo-wrap {
+    position: relative;
+    aspect-ratio: 3/4;
+    background: var(--maroon);
+    overflow: hidden;
+    max-width: 380px;
+  }
+  .yolanda__photo-placeholder {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 1rem;
+    font-size: 0.75rem; letter-spacing: 0.18em;
+    text-transform: uppercase; color: rgba(255,255,255,0.35);
+  }
+  .yolanda__photo-placeholder::before {
+    content: ''; width: 80px; height: 80px;
+    border-radius: 50%; background: rgba(255,255,255,0.08);
+    border: 2px solid rgba(255,255,255,0.15);
+  }
+  .yolanda__frame {
+    position: absolute; inset: 1rem; border: 1px solid rgba(201,168,76,0.3);
+    pointer-events: none;
+  }
+  .yolanda__right {}
+  .yolanda .section-label { color: var(--gold); }
+  .yolanda .section-title { color: var(--white); }
+  .yolanda .section-title em { color: var(--gold-lt); }
+  .yolanda__role {
+    font-family: var(--font-body); font-size: 0.72rem;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 2rem;
+  }
+  .yolanda__body {
+    font-weight: 300; font-size: clamp(0.95rem, 1.2vw, 1.05rem);
+    line-height: 1.85; color: rgba(255,255,255,0.72);
+    margin-bottom: 2rem;
+  }
+  .yolanda__credentials {
+    list-style: none;
+    display: flex; flex-direction: column; gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+  .yolanda__credentials li {
+    display: flex; gap: 1rem; align-items: flex-start;
+    font-size: 0.88rem; color: rgba(255,255,255,0.65);
+    font-weight: 300; line-height: 1.5;
+  }
+  .yolanda__credentials li::before {
+    content: '·'; color: var(--gold); flex-shrink: 0;
+    font-family: var(--font-display); font-size: 1.1rem;
+  }
+    display: inline-flex; flex-direction: column;
+    border: 1px solid rgba(201,168,76,0.4);
+    padding: 1.25rem 1.75rem;
+    gap: 0.25rem;
+  }
+    font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--gold); font-weight: 500;
+  }
+    font-family: var(--font-display); font-size: 1.1rem;
+    color: rgba(255,255,255,0.9); font-weight: 300;
+  }
+
+  /* ─── CONTACT ─── */
+  .contact { background: var(--white); }
+  .contact__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(3rem, 6vw, 6rem);
+  }
+  .contact__form {
+    display: flex; flex-direction: column; gap: 1.25rem;
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-field { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-field label {
+    font-size: 0.68rem; font-weight: 600;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--ink-lt);
+  }
+  .form-field input,
+  .form-field select,
+  .form-field textarea {
+    font-family: var(--font-body); font-size: 0.92rem;
+    padding: 0.85rem 1rem;
+    border: 1px solid rgba(107,26,26,0.15);
+    background: var(--off-white);
+    color: var(--ink); outline: none;
+    transition: border-color 0.2s;
+    resize: vertical;
+    -webkit-appearance: none;
+  }
+  .form-field input:focus,
+  .form-field select:focus,
+  .form-field textarea:focus {
+    border-color: var(--maroon);
+    background: var(--white);
+  }
+  .contact__info { padding-top: 1rem; }
+  .contact__item {
+    display: flex; flex-direction: column; gap: 0.25rem;
+    margin-bottom: 2rem;
+  }
+  .contact__item-label {
+    font-size: 0.65rem; font-weight: 600;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--maroon);
+  }
+  .contact__item-value {
+    font-size: 1rem; color: var(--ink); font-weight: 300;
+    line-height: 1.5;
+  }
+  .contact__item-value a { color: var(--ink); transition: color 0.2s; }
+  .contact__item-value a:hover { color: var(--maroon); }
+  .contact__disclaimer {
+    margin-top: 2rem; padding-top: 1.5rem;
+    border-top: 1px solid var(--rule);
+    font-size: 0.78rem; color: var(--ink-lt);
+    font-weight: 300; line-height: 1.6; font-style: italic;
+  }
+
+  /* ─── FOOTER ─── */
+  .footer {
+    background: var(--maroon-deep);
+    padding-block: 3rem;
+    border-top: 1px solid rgba(201,168,76,0.15);
+  }
+  .footer__inner {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    flex-wrap: wrap; gap: 2rem;
+  }
+  .footer__logo { height: 30px; }
+  .footer__links {
+    display: flex; gap: 2rem; list-style: none; flex-wrap: wrap;
+  }
+  .footer__links a {
+    font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase;
+    color: rgba(255,255,255,0.4); transition: color 0.2s;
+  }
+  .footer__links a:hover { color: var(--gold); }
+
+  .footer__info {
+    display: flex; flex-direction: column; gap: 0.4rem;
+  }
+  .footer__info-item {
+    font-size: 0.72rem; color: rgba(255,255,255,0.45);
+    letter-spacing: 0.04em; line-height: 1.5;
+  }
+  .footer__info-item a {
+    color: rgba(255,255,255,0.45); transition: color 0.2s;
+  }
+  .footer__info-item a:hover { color: var(--gold); }
+  .footer__copy {
+    font-size: 0.7rem; color: rgba(255,255,255,0.3);
+    letter-spacing: 0.08em; text-align: right;
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes scrollLine {
+    0%, 100% { opacity: 0.3; transform: scaleY(1); }
+    50%       { opacity: 0.8; transform: scaleY(1.15); }
+  }
+  .reveal {
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+  .reveal-delay-5 { transition-delay: 0.5s; }
+
+  /* ─── MOBILE ─── */
+  @media (max-width: 900px) {
+    .nav__links { display: none; }
+    .nav__toggle {
+      display: flex; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 4px;
+    }
+    .nav__toggle span {
+      display: block; width: 24px; height: 1px;
+      background: rgba(255,255,255,0.8);
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .intro__grid,
+    .yolanda__grid,
+    .contact__grid { grid-template-columns: 1fr; }
+    .intro__right { border-left: none; border-top: 1px solid var(--rule); padding-left: 0; padding-top: 2rem; }
+    .intro__stats { grid-template-columns: 1fr 1fr; }
+    .practice__header { flex-direction: column; align-items: flex-start; }
+    .form-row { grid-template-columns: 1fr; }
+    .footer__inner { flex-direction: column; align-items: flex-start; }
+  
+  .footer__info {
+    display: flex; flex-direction: column; gap: 0.4rem;
+  }
+  .footer__info-item {
+    font-size: 0.72rem; color: rgba(255,255,255,0.45);
+    letter-spacing: 0.04em; line-height: 1.5;
+  }
+  .footer__info-item a {
+    color: rgba(255,255,255,0.45); transition: color 0.2s;
+  }
+  .footer__info-item a:hover { color: var(--gold); }
+  .footer__copy { text-align: left; }
+  }
+
+  /* ─── WORDPRESS NOTICE ─── */
+  .wp-notice {
+    background: #FFF8E1;
+    border-left: 4px solid #FFC107;
+    padding: 1rem 1.5rem;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.82rem;
+    color: #555;
+    line-height: 1.6;
+  }
+  .wp-notice strong { color: #333; }
+</style>
+</head>
+<body>
+
+<!-- WORDPRESS IMPLEMENTATION NOTES (remove before going live) -->
+<div class="wp-notice">
+  <strong>📋 WordPress Implementation Notes:</strong>
+  Upload this file as a custom page template, or paste the CSS into your theme's Additional CSS and the HTML sections into Elementor / Divi / Beaver Builder blocks. Replace the logo src with the WordPress Media Library URL. Connect the contact form to WPForms or Contact Form 7. Remove this notice before publishing.
+
+<!-- NAV -->
+<nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
+  <div class="nav__inner">
+    <a href="#" aria-label="Álvarez Legal home">
+      <!-- Logo: use white variant on dark background -->
+      <img class="nav__logo"
+           src="https://raw.githubusercontent.com/placeholder/placeholder/main/<?php echo get_template_directory_uri(); ?>/logo-white.png"
+           alt="Álvarez Legal LLC"
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <span style="display:none; font-family:'Cormorant Garamond',serif; color:#fff; font-size:1.1rem; letter-spacing:0.08em;">ÁLVAREZ LEGAL <small style="font-size:0.65em; opacity:0.7;">LLC</small></span>
+    </a>
+    <ul class="nav__links" role="list">
+      <li><a href="#about">About</a></li>
+      <li><a href="#practice">Practice Areas</a></li>
+      <li><a href="#attorney">Attorney</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="#contact" class="nav__cta">Schedule a Consultation</a>
+    <button class="nav__toggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero__bg"></div>
+  <div class="hero__texture"></div>
+  <div class="hero__content">
+    <p class="hero__eyebrow">San Juan, Puerto Rico · Est. 2013</p>
+    <h1 class="hero__title">
+      Protecting What<br>
+      You've <em>Built.</em>
+    </h1>
+    <p class="hero__subtitle">
+      A specialist firm in intellectual property, entertainment law, civil litigation, and animal law - serving clients in Puerto Rico and across the United States.
+    </p>
+    <div class="hero__actions">
+      <a href="#contact" class="btn-primary">Schedule a Consultation</a>
+      <a href="#practice" class="btn-ghost">Our Practice Areas</a>
+    </div>
+  </div>
+  <span class="hero__scroll" aria-hidden="true">Scroll</span>
+</section>
+
+<!-- CHAMBERS BANNER -->
+</div>
+
+<!-- INTRO -->
+<section class="intro" id="about">
+  <div class="container">
+    <div class="intro__grid">
+      <div class="intro__left reveal">
+        <p class="section-label">About the Firm</p>
+        <h2 class="section-title">Specialist Counsel.<br><em>Specific Results.</em></h2>
+        <span class="gold-rule"></span>
+        <p class="section-body">
+          Álvarez Legal is not a general practice firm. Founded by Yolanda Álvarez in 2013, we focus on a defined set of practice areas where we have deep, verifiable expertise: intellectual property, entertainment law, civil and commercial litigation, animal law, and notary services.
+        </p>
+        <br>
+        <p class="section-body">
+          Our clients - businesses, creative professionals, and individuals - come to us because Puerto Rico's legal landscape requires more than boilerplate advice. They need an attorney who knows the specific statutes, the relevant case law, and the courts where their matters will be decided.
+        </p>
+        <br>
+        <a href="#contact" class="btn-primary" style="display:inline-block; margin-top:1rem;">Work With Us</a>
+      </div>
+      <div class="intro__right reveal reveal-delay-2">
+        <div class="intro__stats">
+          <div class="intro__stat">
+            <span class="intro__stat-num">13+</span>
+            <span class="intro__stat-label">Years in Practice</span>
+          </div>
+          <div class="intro__stat">
+            <span class="intro__stat-num">5</span>
+            <span class="intro__stat-label">Practice Areas</span>
+          </div>
+          <div class="intro__stat">
+            <span class="intro__stat-num">2</span>
+            <span class="intro__stat-label">Published Law Journal Co-Authorships</span>
+          </div>
+        </div>
+        <br>
+        <p style="font-size:0.82rem; color:var(--ink-lt); font-weight:300; line-height:1.7; margin-top:1.5rem; padding-top:1.5rem; border-top:1px solid var(--rule);">
+          Yolanda Álvarez is a co-author of <strong>Law 154-2008</strong> - Puerto Rico's Law on the Welfare and Protection of Animals - one of the most progressive animal protection statutes in the Western Hemisphere.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRACTICE AREAS -->
+<section class="practice" id="practice">
+  <div class="container">
+    <div class="practice__header">
+      <div class="reveal">
+        <p class="section-label">What We Do</p>
+        <h2 class="section-title">Practice <em>Areas</em></h2>
+      </div>
+      <p class="section-body reveal reveal-delay-2" style="max-width:36ch;">
+        Every matter we take is within our defined areas of specialty. No referrals to colleagues for work we don't handle ourselves.
+      </p>
+    </div>
+    <div class="practice__grid">
+
+      <article class="practice__card reveal">
+        <span class="practice__icon">®</span>
+        <h3 class="practice__name">Intellectual Property</h3>
+        <p class="practice__desc">Trademark prosecution and registration, copyright protection and registration, IP licensing, and enforcement - under both Puerto Rico and U.S. federal law.</p>
+        <a href="#contact" class="practice__link">Consult us</a>
+      </article>
+
+      <article class="practice__card reveal reveal-delay-1">
+        <span class="practice__icon">⚖</span>
+        <h3 class="practice__name">Civil & Commercial Litigation</h3>
+        <p class="practice__desc">Trial and appellate representation before local and federal courts, alternative dispute resolution, and administrative proceedings.</p>
+        <a href="#contact" class="practice__link">Consult us</a>
+      </article>
+
+      <article class="practice__card reveal reveal-delay-2">
+        <span class="practice__icon">🎵</span>
+        <h3 class="practice__name">Entertainment Law</h3>
+        <p class="practice__desc">Contracts, licensing, and dispute resolution for artists, producers, songwriters, managers, and labels operating in Puerto Rico and the U.S. market.</p>
+        <a href="#contact" class="practice__link">Consult us</a>
+      </article>
+
+      <article class="practice__card reveal reveal-delay-3">
+        <span class="practice__icon">🐾</span>
+        <h3 class="practice__name">Animal Law</h3>
+        <p class="practice__desc">Legal advocacy for animal welfare and rights, informed by Yolanda Álvarez's co-authorship of Law 154-2008 and her leadership of FePA.</p>
+        <a href="#contact" class="practice__link">Consult us</a>
+      </article>
+
+      <article class="practice__card reveal reveal-delay-4">
+        <span class="practice__icon">📋</span>
+        <h3 class="practice__name">Notary Services</h3>
+        <p class="practice__desc">Affidavits, sworn statements, deeds, and essential legal documentation - available at our San Juan office or at your place of business.</p>
+        <a href="#contact" class="practice__link">Consult us</a>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- YOLANDA -->
+<section class="yolanda" id="attorney">
+  <div class="container">
+    <div class="yolanda__grid">
+      <div class="yolanda__left reveal">
+        <div class="yolanda__photo-wrap">
+          <div class="yolanda__photo-placeholder">
+            Attorney Photo
+          </div>
+          <div class="yolanda__frame"></div>
+        </div>
+      </div>
+      <div class="yolanda__right reveal reveal-delay-2">
+        <p class="section-label">Founding Attorney</p>
+        <h2 class="section-title">Yolanda<br><em>Álvarez</em></h2>
+        <p class="yolanda__role">Attorney & Counselor · Founder, Álvarez Legal LLC</p>
+        <p class="yolanda__body">
+          Yolanda Álvarez has practiced at the intersection of intellectual property, entertainment, and advocacy law since 2013. Her practice spans trademark and copyright prosecution, IP and entertainment litigation, and civil matters at both the local and federal level.
+        </p>
+        <p class="yolanda__body">
+          She is the president of FePA (Federación Protectora de Animales de Puerto Rico) and a co-author of Law 154-2008, Puerto Rico's landmark animal protection statute. She has also served as an adjunct professor and as an examining attorney adjudicating opposition and cancellation proceedings before the USPTO.
+        </p>
+        <ul class="yolanda__credentials">
+          <li>Co-author, Law 154-2008 - Law on the Welfare and Protection of Animals</li>
+          <li>President, FePA - Federación Protectora de Animales de Puerto Rico</li>
+          <li>Published co-author, Tort Trial & Insurance Practice Law Journal (2015, 2016)</li>
+          <li>Adjunct Professor - Special Topics in Public Law (Animal Law)</li>
+          <li>Examining Attorney - USPTO opposition and cancellation proceedings</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="container" style="max-width:700px;">
+    <p class="section-label reveal">Get in Touch</p>
+    <h2 class="section-title reveal reveal-delay-1">Schedule a <em>Consultation</em></h2>
+    <span class="gold-rule reveal reveal-delay-2"></span>
+    <p class="section-body reveal reveal-delay-2">
+      Tell us about your matter. We respond to all inquiries within one business day.
+    </p>
+    <br>
+    <form class="contact__form reveal reveal-delay-3" action="#" method="POST" novalidate>
+      <div class="form-row">
+        <div class="form-field">
+          <label for="fname">First Name</label>
+          <input type="text" id="fname" name="first_name" autocomplete="given-name" required>
+        </div>
+        <div class="form-field">
+          <label for="lname">Last Name</label>
+          <input type="text" id="lname" name="last_name" autocomplete="family-name" required>
+        </div>
+      </div>
+      <div class="form-field">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" autocomplete="email" required>
+      </div>
+      <div class="form-field">
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" name="phone" autocomplete="tel">
+      </div>
+      <div class="form-field">
+        <label for="area">Practice Area</label>
+        <select id="area" name="practice_area">
+          <option value="">Select a practice area</option>
+          <option>Intellectual Property (Trademark)</option>
+          <option>Intellectual Property (Copyright)</option>
+          <option>Civil &amp; Commercial Litigation</option>
+          <option>Entertainment Law</option>
+          <option>Animal Law</option>
+          <option>Notary Services</option>
+          <option>Other / Not Sure</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label for="message">Brief Description of Your Matter</label>
+        <textarea id="message" name="message" rows="4" required></textarea>
+      </div>
+      <button type="submit" class="btn-primary">Submit Inquiry</button>
+      <p class="contact__disclaimer">
+        Submitting this form does not create an attorney-client relationship. Please do not include confidential information in your initial message.
+      </p>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <img class="footer__logo"
+           src="<?php echo get_template_directory_uri(); ?>/logo-white.png"
+           alt="Álvarez Legal LLC"
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <span style="display:none; font-family:'Cormorant Garamond',serif; color:rgba(255,255,255,0.6); font-size:0.95rem; letter-spacing:0.1em;">ÁLVAREZ LEGAL LLC</span>
+      <div class="footer__info">
+        <p class="footer__info-item">239 Arterial Hostos Ave., Capital Center Bldg. PH1, Suite 1204, San Juan, PR 00918</p>
+        <p class="footer__info-item">
+          <a href="tel:+17879463996">+1 (787) 946 3996</a>
+          &nbsp;·&nbsp;
+          <a href="mailto:info@alvarezlegalpr.com">info@alvarezlegalpr.com</a>
+        </p>
+        <p class="footer__info-item">English · Español</p>
+      </div>
+      <ul class="footer__links" role="list">
+        <li><a href="#about">About</a></li>
+        <li><a href="#practice">Practice Areas</a></li>
+        <li><a href="#attorney">Attorney</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <p class="footer__copy">
+        © 2026 Álvarez Legal LLC<br>
+        All rights reserved.
+      </p>
+    </div>
+  </div>
+</footer>
+
+
+<script>
+  // Nav scroll effect
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 50);
+  }, { passive: true });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Logo fallback - use actual logo images from project
+  // Replace the onerror fallback src with:
+  // White logo: WHITE_TRANSPARENT.png (for nav and footer on dark bg)
+  // Maroon logo: MAROON_TRANSPARENT.png (for light bg contexts)
+</script>
+</body>
+</html>
